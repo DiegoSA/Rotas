@@ -10,6 +10,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.diego.rotas.R;
+import com.example.diego.rotas.auxiliares.Usuario;
 import com.example.diego.rotas.banco.DBController;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.List;
 public class cadastrarUsuario extends AppCompatActivity {
 
     private Spinner tipo;
+    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,25 +35,32 @@ public class cadastrarUsuario extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                usuario = new Usuario();
                 EditText login = (EditText) findViewById(R.id.editTextLogin);
                 EditText senha = (EditText) findViewById(R.id.editTextSenha);
-                String usuario = login.getText().toString();
-                String password = senha.getText().toString();
-                String type;
+                usuario.setLogin(login.getText().toString());
+                usuario.setSenha(senha.getText().toString());
+
                 if(String.valueOf(tipo.getSelectedItem()).equals("Administrador")){
-                    type = "A";
+                    usuario.setTipo('A');
                 }else if(String.valueOf(tipo.getSelectedItem()).equals("Vendedor")) {
-                    type = "V";
+                    usuario.setTipo('V');
                 }else if(String.valueOf(tipo.getSelectedItem()).equals("Cliente")){
-                    type = "C";
+                    usuario.setTipo('C');
                 }else {
-                    type = "M";
+                    usuario.setTipo('M');
                 }
 
-                String resultado = crud.insertUser(usuario,password,type);
+                String resultado = crud.insertUser(cadastrarUsuario.this, usuario);
 
-                Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_SHORT).show();
+                if(resultado.equals("Usuario gravado com sucesso")) {
+                    Toast.makeText(getBaseContext(), resultado, Toast.LENGTH_SHORT).show();
+                    login.setText(null);
+                    senha.setText(null);
+                }else {
+                    Toast.makeText(getBaseContext(), resultado, Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }

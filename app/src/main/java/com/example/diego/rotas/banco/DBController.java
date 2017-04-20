@@ -3,8 +3,13 @@ package com.example.diego.rotas.banco;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.support.v7.app.AlertDialog;
+import android.widget.Toast;
+
+import com.example.diego.rotas.auxiliares.Usuario;
 
 /**
  * Created by diego on 4/13/17.
@@ -18,41 +23,34 @@ public class DBController {
         banco = new DBHelper(context);
     }
 
-    public String insertUser(String login, String senha, String tipo){
+    public String insertUser(Context context, Usuario usuario){
         ContentValues values;
         long result;
 
-        db = banco.getWritableDatabase();
         values = new ContentValues();
-        values.put(DBHelper.login, login);
-        values.put(DBHelper.senha, senha);
-        values.put(DBHelper.tipo, tipo);
+        values.put("login", usuario.getLogin());
+        values.put("senha", usuario.getSenha());
+        values.put("tipo", String.valueOf(usuario.getTipo()));
 
+        db = banco.getWritableDatabase();
 
-
-        //result = db.insert("Usuarios", null, values);
-        String sql =  "INSERT INTO Usuarios (login, senha, tipo) VALUES ("
-                + login + ", " + senha + ", " + tipo + ")";
-        //inserir direto o codigo de inserir usuário.
-        db.execSQL(sql);
+        result = db.insertOrThrow("USUARIOS", null, values);
 
         db.close();
-        /*if(result == -1){
-
-            return "Erro ao inserir Usuário";
-
-        }else {
+        if(result != -1){
 
             return "Usuario gravado com sucesso";
 
-        }*/
-        return null;
+        }else {
 
+            return "Erro ao inserir Usuário";
+
+        }
     }
 
     public Cursor listarUsuarios(){
-        Cursor cursor;
-        String[] campos = {DBHelper.login};
+        Cursor cursor = null;
+        /*String[] campos = {DBHelper.login};
 
         db = banco.getReadableDatabase();
 
@@ -62,7 +60,7 @@ public class DBController {
             cursor.moveToFirst();
         }
 
-        db.close();
+        db.close();*/
 
         return cursor;
     }

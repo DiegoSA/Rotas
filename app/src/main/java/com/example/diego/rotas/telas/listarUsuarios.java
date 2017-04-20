@@ -21,13 +21,13 @@ public class listarUsuarios extends AppCompatActivity {
 
 
         DBController crud = new DBController(getBaseContext());
-        Cursor cursor = crud.listarUsuarios();
+      /*  Cursor cursor = crud.listarUsuarios();
 
         String[] campos = new String[] {DBHelper.login};
 
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(getBaseContext(), R.layout.activity_listar_usuarios, cursor, campos, null, 0);
 
         lista = (ListView) findViewById(R.id.ListViewUsuarios);
-        lista.setAdapter(adapter);
+        lista.setAdapter(adapter);*/
     }
 }
