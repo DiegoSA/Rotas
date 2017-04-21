@@ -6,7 +6,7 @@ package com.example.diego.rotas.auxiliares;
 
 public class Usuario {
     private long id;
-    private String login;
+    String login;
     private String senha;
     private char tipo;
 

@@ -49,18 +49,18 @@ public class DBController {
     }
 
     public Cursor listarUsuarios(){
-        Cursor cursor = null;
-        /*String[] campos = {DBHelper.login};
+        Cursor cursor;
+        String[] campos = {"id", "login"};
 
         db = banco.getReadableDatabase();
 
-        cursor = db.query(DBHelper.TABLE_USER, campos, null, null, null, null, null, null);
+        cursor = db.query("USUARIOS", campos, null, null, null, null, null, null);
 
         if(cursor != null){
             cursor.moveToFirst();
         }
 
-        db.close();*/
+        db.close();
 
         return cursor;
     }

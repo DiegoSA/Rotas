@@ -22,9 +22,11 @@
             <ImageButton
                 android:id="@+id/imageButtonCadastrar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.06"
-                app:srcCompat="@mipmap/ic_launcher" />
+                android:layout_height="89dp"
+                android:background="@android:color/transparent"
+                android:cropToPadding="false"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/icone_cadastro" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -59,16 +61,17 @@
             <ImageButton
                 android:id="@+id/imageButtonMapa"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.06"
-                app:srcCompat="@mipmap/ic_launcher" />
+                android:layout_height="89dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/icone_entregas" />
 
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.015"
-                android:text="ver Mapa"
+                android:text="Entregas"
                 android:textAlignment="center" />
 
             <ImageButton
