@@ -20,4 +20,52 @@ public class ScriptSQL {
     }
 
 
+    public static String createDefaultUser(){
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("INSERT INTO USUARIOS ( ");
+        sqlBuilder.append("        tipo, ");
+        sqlBuilder.append("        senha, ");
+        sqlBuilder.append("login ");
+        sqlBuilder.append(") ");
+        sqlBuilder.append("VALUES ( ");
+        sqlBuilder.append("'A', ");
+        sqlBuilder.append("'admin', ");
+        sqlBuilder.append("'admin' ");
+        sqlBuilder.append("); ");
+
+        return sqlBuilder.toString();
+    }
+
+    public static String createVendedor(){
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("CREATE TABLE VENDEDOR( ");
+        sqlBuilder.append("_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ");
+        sqlBuilder.append("codigo INTEGER NOT NULL UNIQUE, ");
+        sqlBuilder.append("nome VARCHAR(20) NOT NULL ");
+        sqlBuilder.append("); ");
+
+        return sqlBuilder.toString();
+    }
+
+    public static String createMotorista(){
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("CREATE TABLE MOTORISTA( ");
+        sqlBuilder.append("_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ");
+        sqlBuilder.append("codigo INTEGER NOT NULL UNIQUE, ");
+        sqlBuilder.append("nome VARCHAR(20) NOT NULL ");
+        sqlBuilder.append("); ");
+
+        return sqlBuilder.toString();
+    }
+
+    public static String createVeiculo(){
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("CREATE TABLE VEICULO( ");
+        sqlBuilder.append("_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ");
+        sqlBuilder.append("codigo INTEGER NOT NULL UNIQUE, ");
+        sqlBuilder.append("nome VARCHAR(20) NOT NULL, ");
+        sqlBuilder.append("placa VARCHAR(7) NOT NULL ");
+        sqlBuilder.append("); ");
+        return sqlBuilder.toString();
+    }
 }

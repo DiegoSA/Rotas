@@ -23,12 +23,13 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL(ScriptSQL.createUsuarios());
+        db.execSQL(ScriptSQL.createDefaultUser());
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
+        db.execSQL("DROP TABLE IF EXISTS USUARIOS");
         onCreate(db);
     }
 }

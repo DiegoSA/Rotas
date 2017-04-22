@@ -49,12 +49,12 @@ public class DBController {
     }
 
     public Cursor listarUsuarios(){
-        Cursor cursor;
-        String[] campos = {"id", "login"};
+
+        String[] campos = {"_id", "login", "senha", "tipo"};
 
         db = banco.getReadableDatabase();
 
-        cursor = db.query("USUARIOS", campos, null, null, null, null, null, null);
+        Cursor cursor = db.query("USUARIOS", campos, null, null, null, null, null, null);
 
         if(cursor != null){
             cursor.moveToFirst();
