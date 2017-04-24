@@ -40,7 +40,7 @@ public class TelaLogin extends AppCompatActivity {
                     if(login.getText().toString().equals(user)){
                         if(senha.getText().toString().equals(password)){
                             logado = "sim";
-                            Intent i = new Intent(getBaseContext(), TelaPrincipal.class);
+                            Intent i = new Intent(getBaseContext(), TelaPrincipalAdm.class);
                             startActivity(i);
                             finish();
                         }

@@ -9,7 +9,7 @@ import android.widget.ImageButton;
 import com.example.diego.rotas.MapsActivity;
 import com.example.diego.rotas.R;
 
-public class TelaPrincipal extends AppCompatActivity {
+public class TelaPrincipalAdm extends AppCompatActivity {
 
     ImageButton cadastrar;
     ImageButton mapa;
@@ -24,7 +24,7 @@ public class TelaPrincipal extends AppCompatActivity {
         cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(TelaPrincipal.this, cadastrarUsuario.class);
+                Intent i = new Intent(TelaPrincipalAdm.this, cadastrarUsuario.class);
                 startActivity(i);
             }
         });
@@ -33,7 +33,7 @@ public class TelaPrincipal extends AppCompatActivity {
         mapa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(TelaPrincipal.this, MapsActivity.class);
+                Intent i = new Intent(TelaPrincipalAdm.this, MapsActivity.class);
                 startActivity(i);
             }
         });
@@ -42,7 +42,7 @@ public class TelaPrincipal extends AppCompatActivity {
         listarUsuarios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(TelaPrincipal.this, com.example.diego.rotas.telas.listarUsuarios.class);
+                Intent i = new Intent(TelaPrincipalAdm.this, com.example.diego.rotas.telas.listarUsuarios.class);
                 startActivity(i);
             }
         });
