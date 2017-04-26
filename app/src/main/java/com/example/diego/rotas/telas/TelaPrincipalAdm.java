@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-import com.example.diego.rotas.MapsActivity;
+import com.example.diego.rotas.mapa.MapsActivity;
 import com.example.diego.rotas.R;
 
 public class TelaPrincipalAdm extends AppCompatActivity {

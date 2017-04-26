@@ -69,5 +69,26 @@ public class ScriptSQL {
         return sqlBuilder.toString();
     }
 
+    public static String createCliente(){
+        StringBuilder sqlBuilder = new StringBuilder();
 
+        sqlBuilder.append("CREATE TABLE CLIENTE( ");
+        sqlBuilder.append("_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ");
+        sqlBuilder.append("codigo INTEGER NOT NULL UNIQUE, ");
+        sqlBuilder.append("razao VARCHAR(50) NOT NULL, ");
+        sqlBuilder.append("fantasia VARCHAR(40), ");
+        sqlBuilder.append("cnpj VARCHAR(18) NOT NULL UNIQUE, ");
+        sqlBuilder.append("endereco VARCHAR(60) NOT NULL, ");
+        sqlBuilder.append("numero INTEGER NOT NULL, ");
+        sqlBuilder.append("bairro VARCHAR(40) NOT NULL, ");
+        sqlBuilder.append("cidade VARCHAR(50) NOT NULL, ");
+        sqlBuilder.append("cep VARCHAR(10) NOT NULL, ");
+        sqlBuilder.append("codigoVendedor INTEGER NOT NULL, ");
+        sqlBuilder.append("FOREIGN KEY (codigoVendedor) REFERENCES VENDEDOR(codigo) ");
+        sqlBuilder.append("); ");
+
+        return sqlBuilder.toString();
+    }
+
+    
 }
