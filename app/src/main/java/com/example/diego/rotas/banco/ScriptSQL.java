@@ -41,7 +41,9 @@ public class ScriptSQL {
         sqlBuilder.append("CREATE TABLE VENDEDOR( ");
         sqlBuilder.append("_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ");
         sqlBuilder.append("codigo INTEGER NOT NULL UNIQUE, ");
-        sqlBuilder.append("nome VARCHAR(20) NOT NULL ");
+        sqlBuilder.append("nome VARCHAR(20) NOT NULL, ");
+        sqlBuilder.append("telefone VARCHAR(10) NOT NULL, ");
+        sqlBuilder.append("telefone1 VARCHAR(10) ");
         sqlBuilder.append("); ");
 
         return sqlBuilder.toString();
@@ -52,7 +54,9 @@ public class ScriptSQL {
         sqlBuilder.append("CREATE TABLE MOTORISTA( ");
         sqlBuilder.append("_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ");
         sqlBuilder.append("codigo INTEGER NOT NULL UNIQUE, ");
-        sqlBuilder.append("nome VARCHAR(20) NOT NULL ");
+        sqlBuilder.append("nome VARCHAR(20) NOT NULL, ");
+        sqlBuilder.append("telefone VARCHAR(10) NOT NULL, ");
+        sqlBuilder.append("telefone1 VARCHAR(10) ");
         sqlBuilder.append("); ");
 
         return sqlBuilder.toString();
@@ -78,6 +82,7 @@ public class ScriptSQL {
         sqlBuilder.append("razao VARCHAR(50) NOT NULL, ");
         sqlBuilder.append("fantasia VARCHAR(40), ");
         sqlBuilder.append("cnpj VARCHAR(18) NOT NULL UNIQUE, ");
+        sqlBuilder.append("telefone VARCHAR(10) NOT NULL, ");
         sqlBuilder.append("endereco VARCHAR(60) NOT NULL, ");
         sqlBuilder.append("numero INTEGER NOT NULL, ");
         sqlBuilder.append("bairro VARCHAR(40) NOT NULL, ");
@@ -90,5 +95,36 @@ public class ScriptSQL {
         return sqlBuilder.toString();
     }
 
-    
+    public static String createCarregamento(){
+        StringBuilder sqlBuilder = new StringBuilder();
+
+        sqlBuilder.append("CREATE TABLE CARREGAMENTO( ");
+        sqlBuilder.append("_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ");
+        sqlBuilder.append("numeroCarregamento INTEGER NOT NULL UNIQUE, ");
+        sqlBuilder.append("dataFaturamento DATETIME NOT NULL, ");
+        sqlBuilder.append("dataEntrega DATETIME NOT NULL, ");
+        sqlBuilder.append("codigoMotorista INTEGER NOT NULL, ");
+        sqlBuilder.append("codigoVeiculo INTEGER NOT NULL, ");
+        sqlBuilder.append("quantEntregas INTEGER NOT NULL, ");
+        sqlBuilder.append("FOREIGN KEY (codigoMotorista) REFERENCES MOTORISTA(codigo), ");
+        sqlBuilder.append("FOREIGN KEY (codigoVeiculo) REFERENCES VEICULO(codigo) ");
+        sqlBuilder.append("); ");
+
+        return sqlBuilder.toString();
+    }
+
+    public static String createPedido(){
+        StringBuilder sqlBuilder = new StringBuilder();
+
+        sqlBuilder.append("CREATE TABLE PEDIDO( ");
+        sqlBuilder.append("_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ");
+        sqlBuilder.append("numeroPedido INTEGER NOT NULL UNIQUE, ");
+        sqlBuilder.append("codigoCliente INTEGER NOT NULL, ");
+        sqlBuilder.append("numeroCarregamento INTEGER NOT NULL, ");
+        sqlBuilder.append("FOREIGN KEY (codigoCliente) REFERENCES CLIENTE(codigo), ");
+        sqlBuilder.append("FOREIGN KEY (numeroCarregamento) REFERENCES CARREGAMENTO(numeroCarregamento) ");
+        sqlBuilder.append("); ");
+
+        return sqlBuilder.toString();
+    }
 }
