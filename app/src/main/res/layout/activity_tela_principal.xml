@@ -38,7 +38,7 @@
                 android:textSize="20sp" />
 
             <ImageButton
-                android:id="@+id/imageButtonUsuarios"
+                android:id="@+id/imageButtonSincronizar"
                 android:layout_width="match_parent"
                 android:layout_height="89dp"
                 android:background="@android:color/transparent"
@@ -79,7 +79,7 @@
                 android:textSize="20sp" />
 
             <ImageButton
-                android:id="@+id/imageButton5"
+                android:id="@+id/imageButtonGerenciar"
                 android:layout_width="match_parent"
                 android:layout_height="89dp"
                 android:background="@android:color/transparent"
@@ -103,7 +103,7 @@
             android:weightSum="1">
 
             <ImageButton
-                android:id="@+id/imageButton3"
+                android:id="@+id/imageButtonPedidos"
                 android:layout_width="match_parent"
                 android:layout_height="89dp"
                 android:background="@android:color/transparent"
@@ -120,7 +120,7 @@
                 android:textSize="20sp" />
 
             <ImageButton
-                android:id="@+id/imageButton6"
+                android:id="@+id/imageButtonConfig"
                 android:layout_width="match_parent"
                 android:layout_height="89dp"
                 android:background="@android:color/transparent"

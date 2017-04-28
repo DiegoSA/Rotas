@@ -65,4 +65,21 @@ public class DBController {
         return cursor;
     }
 
+    public Cursor listarPedidos(){
+
+        String[] campos = {"_id", "numeroPedido", "codigoCliente"};
+
+        db = banco.getReadableDatabase();
+
+        Cursor cursor = db.query("PEDIDO", campos, null, null, null, null, null, null);
+
+        if(cursor != null){
+            cursor.moveToFirst();
+        }
+
+        db.close();
+
+        return cursor;
+    }
+
 }

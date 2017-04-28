@@ -34,7 +34,7 @@
             android:label="@string/title_activity_maps" />
         <activity android:name=".telas.cadastrarUsuario" />
         <activity android:name=".telas.TelaPrincipalAdm" />
-        <activity android:name=".telas.listarUsuarios" />
+        <activity android:name=".telas.listarPedidos" />
         <activity android:name=".telas.TelaLogin">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,7 +44,9 @@
         </activity>
         <activity android:name=".telas.TelaPrincipalVendedor" />
         <activity android:name=".telas.TelaPrincipalMotorista" />
-        <activity android:name=".telas.TelaPrincipalCliente"></activity>
+        <activity android:name=".telas.TelaPrincipalCliente" />
+        <activity android:name=".telas.GerenciarCadastro" />
+        <activity android:name=".telas.Configuracao"></activity>
     </application>
 
 </manifest>

@@ -11,7 +11,7 @@ import com.example.diego.rotas.auxiliares.Usuario;
 import com.example.diego.rotas.banco.DBController;
 import com.example.diego.rotas.banco.DBHelper;
 
-public class listarUsuarios extends AppCompatActivity {
+public class listarPedidos extends AppCompatActivity {
 
     private ListView lista;
 
@@ -21,9 +21,9 @@ public class listarUsuarios extends AppCompatActivity {
         setContentView(R.layout.activity_listar_usuarios);
 
         DBController crud = new DBController(getBaseContext());
-        Cursor cursor = crud.listarUsuarios();
+        Cursor cursor = crud.listarPedidos();
 
-        String[] campos = new String[] {"id", "login"};
+        String[] campos = new String[] {"id", "numeroPedido"};
 
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(getBaseContext(), android.R.layout.simple_list_item_1, cursor, campos, null, 0);
 

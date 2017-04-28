@@ -13,7 +13,10 @@ public class TelaPrincipalAdm extends AppCompatActivity {
 
     ImageButton cadastrar;
     ImageButton mapa;
-    ImageButton listarUsuarios;
+    ImageButton listarPedidos;
+    ImageButton sincronizar;
+    ImageButton gerenciar;
+    ImageButton configurar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +41,24 @@ public class TelaPrincipalAdm extends AppCompatActivity {
             }
         });
 
-        listarUsuarios = (ImageButton) findViewById(R.id.imageButtonUsuarios);
-        listarUsuarios.setOnClickListener(new View.OnClickListener() {
+        listarPedidos = (ImageButton) findViewById(R.id.imageButtonPedidos);
+        listarPedidos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(TelaPrincipalAdm.this, com.example.diego.rotas.telas.listarUsuarios.class);
+                Intent i = new Intent(TelaPrincipalAdm.this, com.example.diego.rotas.telas.listarPedidos.class);
                 startActivity(i);
             }
         });
+
+        sincronizar = (ImageButton) findViewById(R.id.imageButtonSincronizar);
+        sincronizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        gerenciar = (ImageButton) findViewById(R.id.imageButtonGerenciar);
+        configurar = (ImageButton) findViewById(R.id.imageButtonConfig);
     }
 }

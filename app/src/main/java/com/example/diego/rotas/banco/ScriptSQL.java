@@ -127,4 +127,8 @@ public class ScriptSQL {
 
         return sqlBuilder.toString();
     }
+
+    public static void atualizarDados(){
+        //criar scripts para atualizar as informações do app
+    }
 }
