@@ -59,6 +59,13 @@ public class TelaPrincipalAdm extends AppCompatActivity {
         });
 
         gerenciar = (ImageButton) findViewById(R.id.imageButtonGerenciar);
+        gerenciar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(TelaPrincipalAdm.this, GerenciarCadastro.class);
+                startActivity(i);
+            }
+        });
         configurar = (ImageButton) findViewById(R.id.imageButtonConfig);
     }
 }
