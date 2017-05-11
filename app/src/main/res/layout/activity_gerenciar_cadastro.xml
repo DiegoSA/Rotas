@@ -52,6 +52,7 @@
 
                 <ListView
                     android:id="@+id/ListUsers"
+                    style="@style/Widget.AppCompat.ListView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
