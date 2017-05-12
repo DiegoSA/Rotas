@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import com.example.diego.rotas.R;
 import com.example.diego.rotas.auxiliares.Usuario;
@@ -24,7 +25,7 @@ public class GerenciarCadastro extends AppCompatActivity {
     private ListView listarUsers;
     private DBController dbController;
     private Cursor cursor;
-    private ArrayAdapter<String> adapter;
+    private SimpleCursorAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +41,19 @@ public class GerenciarCadastro extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 cursor = dbController.listarUsuarios();
-                do{
-                    users[0] = cursor.getString(cursor.getColumnIndex("login"));
-                }while(cursor.moveToNext());
-                adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, users);
-                listarUsers.setAdapter(adapter);
+                listarUsers.setAdapter(fullListView(cursor));
 
 
             }
         });
+    }
+
+    //preencher o ListView de Usuários
+    public SimpleCursorAdapter fullListView(Cursor cursor){
+        String[] columns = new String[]{"login", "tipo"};
+        int[] to = new int[]{R.id.user, R.id.tipo};
+
+        adapter = new SimpleCursorAdapter(getBaseContext(), R.layout.list_usuarios, cursor, columns, to, 0);
+        return adapter;
     }
 }
