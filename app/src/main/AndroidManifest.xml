@@ -46,7 +46,8 @@
         <activity android:name=".telas.TelaPrincipalMotorista" />
         <activity android:name=".telas.TelaPrincipalCliente" />
         <activity android:name=".telas.GerenciarCadastro" />
-        <activity android:name=".telas.Configuracao"></activity>
+        <activity android:name=".telas.Configuracao" />
+        <activity android:name=".telas.AlterarUsuario"></activity>
     </application>
 
 </manifest>

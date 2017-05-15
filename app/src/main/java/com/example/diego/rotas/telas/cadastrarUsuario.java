@@ -1,5 +1,6 @@
 package com.example.diego.rotas.telas;
 
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +21,8 @@ public class cadastrarUsuario extends AppCompatActivity {
 
     private Spinner tipo;
     private Usuario usuario;
+    private Cursor cursor;
+    public boolean operation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,7 @@ public class cadastrarUsuario extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                operation = true;
                 usuario = new Usuario();
                 EditText login = (EditText) findViewById(R.id.editTextLogin);
                 EditText senha = (EditText) findViewById(R.id.editTextSenha);
@@ -51,15 +55,37 @@ public class cadastrarUsuario extends AppCompatActivity {
                     usuario.setTipo('M');
                 }
 
-                String resultado = crud.insertUser(cadastrarUsuario.this, usuario);
+                cursor = crud.listarUsuarios();
 
-                if(resultado.equals("Usuario gravado com sucesso")) {
-                    Toast.makeText(getBaseContext(), resultado, Toast.LENGTH_SHORT).show();
-                    login.setText(null);
-                    senha.setText(null);
-                }else {
-                    Toast.makeText(getBaseContext(), resultado, Toast.LENGTH_SHORT).show();
+                do {
+                    if(cursor.getString(cursor.getColumnIndexOrThrow("login")).equals(login.getText().toString())){
+                        Toast.makeText(getBaseContext(), "Usuário já Existe!", Toast.LENGTH_SHORT).show();
+                        login.setText(null);
+                        senha.setText(null);
+                        operation = false;
+                        break;
+                    }
+                }while (cursor.moveToNext());
+
+                if(operation){
+
+                    if(usuario.getSenha().toString() != null){
+                        String resultado = crud.insertUser(cadastrarUsuario.this, usuario);
+
+                        if(resultado.equals("Usuario gravado com sucesso")) {
+                            Toast.makeText(getBaseContext(), resultado, Toast.LENGTH_SHORT).show();
+                            login.setText(null);
+                            senha.setText(null);
+                        }else {
+                            Toast.makeText(getBaseContext(), resultado, Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        Toast.makeText(getBaseContext(), "Informe uma senha válida", Toast.LENGTH_SHORT).show();
+                    }
                 }
+
+
+
 
             }
         });

@@ -82,4 +82,54 @@ public class DBController {
         return cursor;
     }
 
+    public void removeUser(int id){
+        String where = "_id = " + id + ";";
+
+        db = banco.getWritableDatabase();
+        db.delete("USUARIOS", where, null);
+        db.close();
+    }
+
+    public Cursor consultaUsuario(int id){
+
+        String[] campos = {"_id", "login", "senha", "tipo"};
+
+        db = banco.getReadableDatabase();
+
+        Cursor cursor = db.query("USUARIOS", campos, null, null, null, null, null, null);
+        cursor.moveToPosition(id);
+
+        /*Usuario usuario = new Usuario();
+        usuario.setId(cursor.getInt(cursor.getColumnIndexOrThrow("_id")));
+        usuario.setLogin(cursor.getString(cursor.getColumnIndexOrThrow("login")));
+        usuario.setSenha(cursor.getString(cursor.getColumnIndexOrThrow("senha")));
+        if(cursor.getString(cursor.getColumnIndexOrThrow("tipo")).toString().equals('A')){
+            usuario.setTipo('A');
+        }else if(cursor.getString(cursor.getColumnIndexOrThrow("tipo")).toString().equals('V')) {
+            usuario.setTipo('V');
+        }else if(cursor.getString(cursor.getColumnIndexOrThrow("tipo")).toString().equals('C')){
+            usuario.setTipo('C');
+        }else {
+            usuario.setTipo('M');
+        }*/
+
+
+        return cursor;
+    }
+
+    public void alterarUsuario(Usuario usuario){
+        ContentValues values;
+        String where = "_id = " + String.valueOf(usuario.getId()) + ";";
+
+        db = banco.getWritableDatabase();
+
+        values = new ContentValues();
+        values.put("login", usuario.getLogin());
+        values.put("senha", usuario.getSenha());
+        values.put("tipo", String.valueOf(usuario.getTipo()));
+
+        db.update("USUARIOS", values, where, null);
+        db.close();
+
+    }
 }

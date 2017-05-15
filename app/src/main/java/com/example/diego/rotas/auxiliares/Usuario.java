@@ -5,16 +5,16 @@ package com.example.diego.rotas.auxiliares;
  */
 
 public class Usuario {
-    private long id;
+    private int id;
     String login;
     private String senha;
     private char tipo;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
