@@ -21,8 +21,7 @@
     string in this file.
     -->
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-        AIzaSyBxWYnEAZbyFLXdFsPiRGLOmzrGtrYGKcU <!-- notebook-->
-        <!--AIzaSyAk1qNiwa1PA1zI9A4Rl9ma1OCiDeIaLGw   PC casa-->
-        <!--AIzaSyB1is9MU2z2kx4yqQgVr35m6Eb6AWc5c9Y-->
+        AIzaSyCbLVKw1FgzW3JCjbWGhBGeWf40QsqOCOE <!-- PC Casa-->
+        <!--AIzaSyBxWYnEAZbyFLXdFsPiRGLOmzrGtrYGKcU  notebook-->
     </string>
 </resources>
