@@ -5,6 +5,10 @@
     To get one, follow this link, follow the directions and press "Create" at the end:
 
     https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=AC:16:67:7D:68:96:2E:70:D2:D6:F5:AD:54:50:F8:0D:89:D0:66:64%3Bcom.example.diego.rotas
+    MAC Adress Notebook
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=18:C1:C2:D8:CD:86:04:63:A3:B6:36:8D:DD:FA:FA:19:23:99:BA:62%3Bcom.example.diego.rotas
+    MAC Adress Home Desktop
 
     You can also add your credentials to an existing key, using these values:
 
@@ -21,7 +25,8 @@
     string in this file.
     -->
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-        AIzaSyCbLVKw1FgzW3JCjbWGhBGeWf40QsqOCOE <!-- PC Casa-->
+        AIzaSyCIJyd9d0q90ISLOAe_cSISmz66ty3njYY <!-- PC Casa teste-->
+        <!--AIzaSyCbLVKw1FgzW3JCjbWGhBGeWf40QsqOCOE  PC Casa-->
         <!--AIzaSyBxWYnEAZbyFLXdFsPiRGLOmzrGtrYGKcU  notebook-->
     </string>
 </resources>
