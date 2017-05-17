@@ -4,10 +4,12 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.location.Geocoder;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -25,8 +27,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_GREEN;
 
@@ -36,11 +43,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private int opcao;
     private ArrayList<Marker> entregas; //ainda estou em dúvida de como utilizar o armazenamento de marcadores
     private LocationManager location;
+    private List<LatLng> decodePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        decodePath = null;
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -80,6 +89,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(entrega2).title("Segunda Entrega"));
         LatLng entrega3 = new LatLng(-7.13, -34.85);
         mMap.addMarker(new MarkerOptions().position(entrega3).title("Terceira Entrega"));
+
+        /*decodePath.add(new LatLng(-7.12, -34.879));
+        decodePath.add(new LatLng(-7.15, -34.8));
+        decodePath.add(entrega3);
+
+        mMap.addPolyline(new PolylineOptions().addAll(decodePath).color(Color.CYAN));*/
 
         //foco no primeiro marcador
         mMap.moveCamera(CameraUpdateFactory.newLatLng(entrega1));

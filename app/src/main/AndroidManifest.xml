@@ -20,7 +20,7 @@ package="com.example.diego.rotas">
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/. 
         -->
-    <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCIJyd9d0q90ISLOAe_cSISmz66ty3njYY" />
+    <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyA32SKsuSO4wqu2_eMZF1iV_7388qIG5Pc" />
 
     <activity android:name=".mapa.MapsActivity" android:label="@string/title_activity_maps" />
     <activity android:name=".telas.cadastrarUsuario" />
