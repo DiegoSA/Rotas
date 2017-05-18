@@ -28,8 +28,8 @@
     string in this file.
     -->
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-        <!--AIzaSyCIJyd9d0q90ISLOAe_cSISmz66ty3njYY  PC Casa teste-->
-        AIzaSyA32SKsuSO4wqu2_eMZF1iV_7388qIG5Pc<!--PC Trabalho-->
+        AIzaSyCIJyd9d0q90ISLOAe_cSISmz66ty3njYY<!--PC Casa teste-->
+        <!--AIzaSyA32SKsuSO4wqu2_eMZF1iV_7388qIG5Pc  PC Trabalho-->
         <!--AIzaSyBxWYnEAZbyFLXdFsPiRGLOmzrGtrYGKcU  notebook-->
     </string>
 </resources>
