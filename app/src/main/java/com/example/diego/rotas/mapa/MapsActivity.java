@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 
 import com.example.diego.rotas.R;
+import com.example.diego.rotas.mapa.rotas.connectAsyncTask;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -29,12 +31,14 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
 
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_GREEN;
 
@@ -44,6 +48,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private int opcao;
     private ArrayList<Marker> entregas; //ainda estou em dúvida de como utilizar o armazenamento de marcadores
     private LocationManager location;
+    private connectAsyncTask connectAsyncTask;
+    private List<LatLng> pontos;
+
 
 
     @Override
@@ -84,7 +91,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // defino a latitude e longitude do marcador e adiciono no mapa
         LatLng entrega1 = new LatLng(-7.12, -34.879);
-        mMap.addMarker(new MarkerOptions().position(entrega1).title("Primeira Entrega"));
+        mMap.addMarker(new MarkerOptions().position(entrega1).title("Primeira Entrega")).setTag("Primeira Entrega");
         LatLng entrega2 = new LatLng(-7.15, -34.8);
         mMap.addMarker(new MarkerOptions().position(entrega2).title("Segunda Entrega"));
         LatLng entrega3 = new LatLng(-7.13, -34.85);
@@ -93,9 +100,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         makeURL(entrega1.latitude, entrega1.longitude, entrega2.latitude, entrega2.longitude);
 
         PolylineOptions polylineOptions = new PolylineOptions();
-        polylineOptions.add(entrega1);
+        polylineOptions.color(android.R.color.holo_red_light);
+
+        connectAsyncTask = new connectAsyncTask(makeURL(entrega1.latitude, entrega1.longitude, entrega2.latitude, entrega2.longitude));
+        polylineOptions.addAll((Iterable<LatLng>) connectAsyncTask);
+        /*polylineOptions.add(entrega1);
         polylineOptions.add(entrega2);
-        polylineOptions.add(entrega3);
+        polylineOptions.add(entrega3);*/
+
+
 
         mMap.addPolyline(polylineOptions);
 
@@ -107,9 +120,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public boolean onMarkerClick(final Marker marker) {
 
+                String seq = (String) marker.getTag();
                 AlertDialog.Builder ad = new AlertDialog.Builder(MapsActivity.this);
                 ad.setTitle("Confirmação de Entrega");
-                ad.setMessage("A Entrega foi Finalizada?");
+                ad.setMessage("A "+ seq +"  foi Finalizada?");
                 ad.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -184,6 +198,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         urlString.append("&sensor=false&mode=driving&alternatives=true");
         return urlString.toString();
     }
+
+    public void buscarCoordenadasEndereco(String enderecoOrigem, String enderecoDestino) {
+        Geocoder geoCoder = new Geocoder(this, Locale.getDefault());// esse Geocoder aqui é quem vai traduzir o endereço de String para coordenadas double
+        List<Address> addresses = null;//este Adress aqui recebe um retorno do metodo geoCoder.getFromLocationName vc manipula este retorno pra pega as coordenadas
+        try {
+            addresses = geoCoder.getFromLocationName(enderecoOrigem, 1);// o numero um aqui é a quantidade maxima de resultados que vc quer receber
+            double fromLat = addresses.get(0).getLatitude();
+            double fromLon = addresses.get(0).getLongitude();
+            addresses = geoCoder.getFromLocationName(enderecoDestino, 1);
+            double toLat = addresses.get(0).getLatitude();
+            double toLon = addresses.get(0).getLongitude();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /*public void carregaMapa() { // este metodo aqui foi explicado no exemplo do post anterior
+        new Thread() {
+            @Override
+            public void run() {
+                buscarCoordenadasEndereco("Rua GUJ, 12 - Curitiba", "Rua Java, 10 - Curitiba");// esta é a chamada para o metodo que vai traduzir o endereço para coordenadas é //a duvida descrita, é util para trabalhar com endereços que o usuário digitar
+                String url = RoadProvider
+                        .getUrl(fromLat, fromLon, toLat, toLon);
+                InputStream is = getConnection(url);
+                mRoad = RoadProvider.getRoute(is);
+                mHandler.sendEmptyMessage(0);
+            }
+        }.start();
+        mapView.invalidate();
+    }*/
 
 
 }
