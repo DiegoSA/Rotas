@@ -1,17 +1,9 @@
 package com.example.diego.rotas.mapa;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.Point;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.LocationListener;
 import android.location.LocationManager;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -19,28 +11,20 @@ import android.widget.Toast;
 
 
 import com.example.diego.rotas.R;
-import com.example.diego.rotas.mapa.rotas.connectAsyncTask;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Locale;
-
-import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_GREEN;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -48,7 +32,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private int opcao;
     private ArrayList<Marker> entregas; //ainda estou em dúvida de como utilizar o armazenamento de marcadores
     private LocationManager location;
-    private connectAsyncTask connectAsyncTask;
     private List<LatLng> pontos;
 
 
@@ -102,11 +85,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         PolylineOptions polylineOptions = new PolylineOptions();
         polylineOptions.color(android.R.color.holo_red_light);
 
-        connectAsyncTask = new connectAsyncTask(makeURL(entrega1.latitude, entrega1.longitude, entrega2.latitude, entrega2.longitude));
-        polylineOptions.addAll((Iterable<LatLng>) connectAsyncTask);
-        /*polylineOptions.add(entrega1);
+        polylineOptions.add(entrega1);
         polylineOptions.add(entrega2);
-        polylineOptions.add(entrega3);*/
+        polylineOptions.add(entrega3);
 
 
 
