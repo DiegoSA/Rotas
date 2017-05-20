@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 
 import com.example.diego.rotas.R;
+import com.example.diego.rotas.mapa.rota.RotaAsyncTask;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -80,7 +81,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng entrega3 = new LatLng(-7.13, -34.85);
         mMap.addMarker(new MarkerOptions().position(entrega3).title("Terceira Entrega"));
 
-        makeURL(entrega1.latitude, entrega1.longitude, entrega2.latitude, entrega2.longitude);
+        /*makeURL(entrega1.latitude, entrega1.longitude, entrega2.latitude, entrega2.longitude);
 
         PolylineOptions polylineOptions = new PolylineOptions();
         polylineOptions.color(android.R.color.holo_red_light);
@@ -89,9 +90,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         polylineOptions.add(entrega2);
         polylineOptions.add(entrega3);
 
+        mMap.addPolyline(polylineOptions);*/
 
 
-        mMap.addPolyline(polylineOptions);
 
         //foco no primeiro marcador
         mMap.moveCamera(CameraUpdateFactory.newLatLng(entrega1));
@@ -147,6 +148,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //zoom no marcador focado
         mMap.moveCamera(CameraUpdateFactory.zoomTo(14));
+
+        new RotaAsyncTask(this, mMap).execute(entrega1.latitude, entrega1.longitude, entrega2.latitude, entrega2.longitude);
+        new RotaAsyncTask(this, mMap).execute(entrega2.latitude, entrega2.longitude, entrega3.latitude, entrega3.longitude);
     }
 
     public void alterPosition(Marker marker, int opcao){
