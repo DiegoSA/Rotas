@@ -6,10 +6,16 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.icu.text.DateFormat;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
+import com.example.diego.rotas.auxiliares.Entrega;
 import com.example.diego.rotas.auxiliares.Usuario;
+
+import java.util.Date;
 
 /**
  * Created by diego on 4/13/17.
@@ -129,6 +135,31 @@ public class DBController {
         values.put("tipo", String.valueOf(usuario.getTipo()));
 
         db.update("USUARIOS", values, where, null);
+        db.close();
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void finalizarEntrega(int numeroPedido){
+        ContentValues values;
+        Entrega entrega = new Entrega();
+        String where = "numeroPedido = " + String.valueOf(numeroPedido);
+
+        db = banco.getWritableDatabase();
+
+        values = new ContentValues();
+        values.put("_id", entrega.getId());
+        values.put("numeroPedido", entrega.getNumeroPedido());
+        values.put("codigoCliente", entrega.getCodigoCliente());
+        values.put("dataFaturamento", String.valueOf(entrega.getDataFaturamento()));
+
+        //pegar a data atual
+        String data = DateFormat.getDateInstance().format(new Date());
+
+        values.put("dataEntrega", data);
+        values.put("numeroCarregamento", entrega.getNumeroCarregamento());
+
+        db.update("PEDIDO", values, where, null);
         db.close();
 
     }

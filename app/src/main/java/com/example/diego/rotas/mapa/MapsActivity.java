@@ -1,5 +1,6 @@
 package com.example.diego.rotas.mapa;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.location.Address;
 import android.location.Geocoder;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 
 import com.example.diego.rotas.R;
+import com.example.diego.rotas.banco.DBController;
 import com.example.diego.rotas.mapa.rota.RotaAsyncTask;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -34,6 +36,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ArrayList<Marker> entregas; //ainda estou em dúvida de como utilizar o armazenamento de marcadores
     private LocationManager location;
     private List<LatLng> pontos;
+    private DBController dbController;
 
 
 
@@ -60,6 +63,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        dbController = new DBController(getBaseContext());
         /*location = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -81,16 +85,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng entrega3 = new LatLng(-7.13, -34.85);
         mMap.addMarker(new MarkerOptions().position(entrega3).title("Terceira Entrega"));
 
-        /*makeURL(entrega1.latitude, entrega1.longitude, entrega2.latitude, entrega2.longitude);
+        //makeURL(entrega1.latitude, entrega1.longitude, entrega2.latitude, entrega2.longitude);
 
-        PolylineOptions polylineOptions = new PolylineOptions();
-        polylineOptions.color(android.R.color.holo_red_light);
 
-        polylineOptions.add(entrega1);
-        polylineOptions.add(entrega2);
-        polylineOptions.add(entrega3);
-
-        mMap.addPolyline(polylineOptions);*/
 
 
 
@@ -110,6 +107,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(MapsActivity.this, "Entrega realizada", Toast.LENGTH_SHORT).show();
+                        //dbController.finalizarEntrega(); //falta passar o numero do pedido por referência
                         opcao = 1;
                         alterPosition(marker, opcao);
                     }
@@ -149,8 +147,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //zoom no marcador focado
         mMap.moveCamera(CameraUpdateFactory.zoomTo(14));
 
-        new RotaAsyncTask(this, mMap).execute(entrega1.latitude, entrega1.longitude, entrega2.latitude, entrega2.longitude);
-        new RotaAsyncTask(this, mMap).execute(entrega2.latitude, entrega2.longitude, entrega3.latitude, entrega3.longitude);
+        traçarRota(this, mMap, entrega1, entrega2);
     }
 
     public void alterPosition(Marker marker, int opcao){
@@ -167,6 +164,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             default:
                 break;
         }
+    }
+
+    public void traçarRota(Context context, GoogleMap mMap, LatLng start, LatLng destiny){
+        new RotaAsyncTask(context, mMap).execute(start.latitude, start.longitude, destiny.latitude, destiny.longitude);
     }
 
     public String makeURL(double sourcelat, double sourcelog, double destlat, double destlog) {
@@ -199,23 +200,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
     }
-
-    /*public void carregaMapa() { // este metodo aqui foi explicado no exemplo do post anterior
-        new Thread() {
-            @Override
-            public void run() {
-                buscarCoordenadasEndereco("Rua GUJ, 12 - Curitiba", "Rua Java, 10 - Curitiba");// esta é a chamada para o metodo que vai traduzir o endereço para coordenadas é //a duvida descrita, é util para trabalhar com endereços que o usuário digitar
-                String url = RoadProvider
-                        .getUrl(fromLat, fromLon, toLat, toLon);
-                InputStream is = getConnection(url);
-                mRoad = RoadProvider.getRoute(is);
-                mHandler.sendEmptyMessage(0);
-            }
-        }.start();
-        mapView.invalidate();
-    }*/
-
-
 }
 
 

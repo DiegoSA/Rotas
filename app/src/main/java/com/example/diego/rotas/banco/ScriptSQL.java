@@ -120,6 +120,8 @@ public class ScriptSQL {
         sqlBuilder.append("_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ");
         sqlBuilder.append("numeroPedido INTEGER NOT NULL UNIQUE, ");
         sqlBuilder.append("codigoCliente INTEGER NOT NULL, ");
+        sqlBuilder.append("dataFaturamento DATETIME NOT NULL, ");
+        sqlBuilder.append("dataEntrega DATETIME NOT NULL, ");
         sqlBuilder.append("numeroCarregamento INTEGER NOT NULL, ");
         sqlBuilder.append("FOREIGN KEY (codigoCliente) REFERENCES CLIENTE(codigo), ");
         sqlBuilder.append("FOREIGN KEY (numeroCarregamento) REFERENCES CARREGAMENTO(numeroCarregamento) ");

@@ -56,7 +56,7 @@ public class GerenciarCadastro extends AppCompatActivity {
         });
     }
 
-    //tentando fazer funcionar o AlertDialog
+
     public void opcoesCadastro(final int position){
         alert = new AlertDialog.Builder(this)
                 .setTitle("Alterar ou Remover?")
