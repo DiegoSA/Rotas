@@ -8,11 +8,12 @@ import java.util.Date;
 
 public class Entrega {
     private int id;
-    private int numeroPedido;
+    private int numeroNota;
     private int codigoCliente;
     private Date dataFaturamento;
     private Date dataEntrega;
     private int numeroCarregamento;
+    private int codigoVendedor;
 
     public Entrega(){
     }
@@ -25,12 +26,20 @@ public class Entrega {
         this.id = id;
     }
 
-    public int getNumeroPedido() {
-        return numeroPedido;
+    public int getCodigoVendedor() {
+        return codigoVendedor;
     }
 
-    public void setNumeroPedido(int numeroPedido) {
-        this.numeroPedido = numeroPedido;
+    public void setCodigoVendedor(int codigoVendedor) {
+        this.codigoVendedor = codigoVendedor;
+    }
+
+    public int getNumeroNota() {
+        return numeroNota;
+    }
+
+    public void setNumeroNota(int numeroNota) {
+        this.numeroNota = numeroNota;
     }
 
     public int getCodigoCliente() {

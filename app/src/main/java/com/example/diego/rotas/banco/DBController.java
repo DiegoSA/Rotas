@@ -3,18 +3,17 @@ package com.example.diego.rotas.banco;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.icu.text.DateFormat;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
 import com.example.diego.rotas.auxiliares.Entrega;
 import com.example.diego.rotas.auxiliares.Usuario;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 /**
@@ -24,9 +23,54 @@ import java.util.Date;
 public class DBController {
     private SQLiteDatabase db;
     private DBHelper banco;
+    private ConnectOracle oracle;
+    private ResultSet pedidos;
 
     public DBController(Context context){
         banco = new DBHelper(context);
+    }
+
+    public void inserirEntrega(Context context){
+        /*try{
+            oracle = new ConnectOracle();
+        }catch (ClassNotFoundException e){
+            Toast.makeText(context, "Erro ao conectar ao banco oracle", Toast.LENGTH_SHORT).show();
+        }
+
+        ContentValues values = new ContentValues();
+
+        try {
+            pedidos = oracle.getResult();
+
+            while (pedidos.next()) {
+                values.put("numeroNota", pedidos.getString("numeroNota"));
+                values.put("codigoCliente", pedidos.getString("codigoCliente"));
+                values.put("dataFaturamento", pedidos.getString("dataFaturamento"));
+                values.put("dataEntrega", pedidos.getString("dataEntrega"));
+                values.put("numeroCarregamento", pedidos.getString("numeroCarregamento"));
+                values.put("codigoVendedor", pedidos.getString("codigoVendedor"));
+
+                db = banco.getWritableDatabase();
+
+                db.insertOrThrow("PEDIDO", null, values);
+            }
+
+        } catch (SQLException e) {
+            Toast.makeText(context, "Erro ao consultar pedidos no banco oracle", Toast.LENGTH_SHORT).show();
+        }
+
+        values.put("numeroNota", entrega.getNumeroNota());
+        values.put("codigoCliente", entrega.getCodigoCliente());
+        values.put("dataFaturamento", String.valueOf(entrega.getDataFaturamento()));
+        values.put("dataEntrega", String.valueOf(entrega.getDataEntrega()));
+        values.put("numeroCarregamento", entrega.getNumeroCarregamento());
+        values.put("codigoVendedor", entrega.getCodigoVendedor());*/
+
+        db = banco.getWritableDatabase();
+
+        //db.insertOrThrow("PEDIDO", null, values);
+
+        db.close();
     }
 
     public String insertUser(Context context, Usuario usuario){
@@ -73,7 +117,7 @@ public class DBController {
 
     public Cursor listarPedidos(){
 
-        String[] campos = {"_id", "numeroPedido", "codigoCliente"};
+        String[] campos = {"_id", "numeroNota", "codigoCliente", "dataFaturamento", "dataEntrega", "numeroCarregamento", "codigoVendedor"};
 
         db = banco.getReadableDatabase();
 
@@ -149,7 +193,7 @@ public class DBController {
 
         values = new ContentValues();
         values.put("_id", entrega.getId());
-        values.put("numeroPedido", entrega.getNumeroPedido());
+        values.put("numeroPedido", entrega.getNumeroNota());
         values.put("codigoCliente", entrega.getCodigoCliente());
         values.put("dataFaturamento", String.valueOf(entrega.getDataFaturamento()));
 

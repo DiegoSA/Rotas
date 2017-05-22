@@ -102,7 +102,7 @@ public class ScriptSQL {
         sqlBuilder.append("_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ");
         sqlBuilder.append("numeroCarregamento INTEGER NOT NULL UNIQUE, ");
         sqlBuilder.append("dataFaturamento DATETIME NOT NULL, ");
-        sqlBuilder.append("dataEntrega DATETIME NOT NULL, ");
+        sqlBuilder.append("dataEntrega DATETIME, ");
         sqlBuilder.append("codigoMotorista INTEGER NOT NULL, ");
         sqlBuilder.append("codigoVeiculo INTEGER NOT NULL, ");
         sqlBuilder.append("quantEntregas INTEGER NOT NULL, ");
@@ -118,11 +118,13 @@ public class ScriptSQL {
 
         sqlBuilder.append("CREATE TABLE PEDIDO( ");
         sqlBuilder.append("_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ");
-        sqlBuilder.append("numeroPedido INTEGER NOT NULL UNIQUE, ");
+        sqlBuilder.append("numeroNota INTEGER NOT NULL UNIQUE, ");
         sqlBuilder.append("codigoCliente INTEGER NOT NULL, ");
         sqlBuilder.append("dataFaturamento DATETIME NOT NULL, ");
-        sqlBuilder.append("dataEntrega DATETIME NOT NULL, ");
+        sqlBuilder.append("dataEntrega DATETIME, ");
         sqlBuilder.append("numeroCarregamento INTEGER NOT NULL, ");
+        sqlBuilder.append("codigoVendedor INTEGER NOT NULL, ");
+        sqlBuilder.append("FOREIGN KEY (codigoVendedor) REFERENCES VENDEDOR(codigo), ");
         sqlBuilder.append("FOREIGN KEY (codigoCliente) REFERENCES CLIENTE(codigo), ");
         sqlBuilder.append("FOREIGN KEY (numeroCarregamento) REFERENCES CARREGAMENTO(numeroCarregamento) ");
         sqlBuilder.append("); ");

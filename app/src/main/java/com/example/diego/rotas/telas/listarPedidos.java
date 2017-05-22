@@ -3,31 +3,31 @@ package com.example.diego.rotas.telas;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 import com.example.diego.rotas.R;
-import com.example.diego.rotas.auxiliares.Usuario;
 import com.example.diego.rotas.banco.DBController;
-import com.example.diego.rotas.banco.DBHelper;
+import com.example.diego.rotas.banco.Teste;
 
 public class listarPedidos extends AppCompatActivity {
 
-    private ListView lista;
+    private Button btRefresh;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listar_usuarios);
+        setContentView(R.layout.activity_listar_pedidos);
 
-        DBController crud = new DBController(getBaseContext());
-        Cursor cursor = crud.listarPedidos();
+        btRefresh = (Button) findViewById(R.id.buttonRefresh);
+        btRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        String[] campos = new String[] {"id", "numeroPedido"};
-
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(getBaseContext(), android.R.layout.simple_list_item_1, cursor, campos, null, 0);
-
-        lista = (ListView) findViewById(R.id.ListViewUsuarios);
-        lista.setAdapter(adapter);
+            }
+        });
     }
 }

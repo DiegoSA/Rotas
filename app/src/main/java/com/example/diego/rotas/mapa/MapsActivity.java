@@ -2,6 +2,7 @@ package com.example.diego.rotas.mapa;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
@@ -37,6 +38,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LocationManager location;
     private List<LatLng> pontos;
     private DBController dbController;
+    private Cursor cursor;
+    private String endereco;
 
 
 
@@ -78,14 +81,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         location.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) MapsActivity.this);*/
 
         // defino a latitude e longitude do marcador e adiciono no mapa
-        LatLng entrega1 = new LatLng(-7.12, -34.879);
+
+        LatLng entrega, entrega1 = null;
+        cursor = dbController.listarPedidos();
+        int i = 1;
+        do{
+            endereco = (cursor.getString(cursor.getColumnIndexOrThrow("endereco"))) + ", " + (cursor.getString(cursor.getColumnIndexOrThrow("numero")));
+            entrega = buscarCoordenadasEndereco(endereco);
+            mMap.addMarker(new MarkerOptions().position(entrega).title(i + "ª Entrega")).setTag(i + "ª entrega");
+            if(i == 1){
+                entrega1 = entrega;
+            }
+            pontos.add(i-1,entrega);
+            i++;
+        }while (cursor.moveToNext());
+
+        /*LatLng entrega1 = new LatLng(-7.12, -34.879);
         mMap.addMarker(new MarkerOptions().position(entrega1).title("Primeira Entrega")).setTag("Primeira Entrega");
         LatLng entrega2 = new LatLng(-7.15, -34.8);
         mMap.addMarker(new MarkerOptions().position(entrega2).title("Segunda Entrega"));
         LatLng entrega3 = new LatLng(-7.13, -34.85);
         mMap.addMarker(new MarkerOptions().position(entrega3).title("Terceira Entrega"));
 
-        //makeURL(entrega1.latitude, entrega1.longitude, entrega2.latitude, entrega2.longitude);
+        makeURL(entrega1.latitude, entrega1.longitude, entrega2.latitude, entrega2.longitude);*/
 
 
 
@@ -147,7 +165,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //zoom no marcador focado
         mMap.moveCamera(CameraUpdateFactory.zoomTo(14));
 
-        traçarRota(this, mMap, entrega1, entrega2);
+        for(int j=0; j<(pontos.size() - 1); j++) {
+            traçarRota(this, mMap, pontos.get(j), pontos.get(j+1));
+        }
     }
 
     public void alterPosition(Marker marker, int opcao){
@@ -185,20 +205,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return urlString.toString();
     }
 
-    public void buscarCoordenadasEndereco(String enderecoOrigem, String enderecoDestino) {
+    public LatLng buscarCoordenadasEndereco(String enderecoOrigem) {
         Geocoder geoCoder = new Geocoder(this, Locale.getDefault());// esse Geocoder aqui é quem vai traduzir o endereço de String para coordenadas double
-        List<Address> addresses = null;//este Adress aqui recebe um retorno do metodo geoCoder.getFromLocationName vc manipula este retorno pra pega as coordenadas
+        List<Address> addresses = null; //este Adress aqui recebe um retorno do metodo geoCoder.getFromLocationName vc manipula este retorno pra pega as coordenadas
+        LatLng latLng;
         try {
             addresses = geoCoder.getFromLocationName(enderecoOrigem, 1);// o numero um aqui é a quantidade maxima de resultados que vc quer receber
             double fromLat = addresses.get(0).getLatitude();
             double fromLon = addresses.get(0).getLongitude();
-            addresses = geoCoder.getFromLocationName(enderecoDestino, 1);
+            latLng = new LatLng(fromLat, fromLon);
+
+            return latLng;
+            /*addresses = geoCoder.getFromLocationName(enderecoDestino, 1);
             double toLat = addresses.get(0).getLatitude();
-            double toLon = addresses.get(0).getLongitude();
+            double toLon = addresses.get(0).getLongitude();*/
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        return null;
     }
 }
 
