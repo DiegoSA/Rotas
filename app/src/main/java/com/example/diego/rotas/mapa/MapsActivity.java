@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -27,7 +28,10 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Locale;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -36,9 +40,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private int opcao;
     private ArrayList<Marker> entregas; //ainda estou em dúvida de como utilizar o armazenamento de marcadores
     private LocationManager location;
-    private List<LatLng> pontos;
+    private ArrayList<LatLng> pontos;
     private DBController dbController;
-    private Cursor cursor;
+    private Cursor cursorPedido, cursorCliente;
     private String endereco;
 
 
@@ -47,6 +51,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        pontos = new ArrayList<LatLng>();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -67,6 +72,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         dbController = new DBController(getBaseContext());
+
         /*location = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -82,19 +88,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // defino a latitude e longitude do marcador e adiciono no mapa
 
-        LatLng entrega, entrega1 = null;
-        cursor = dbController.listarPedidos();
+        LatLng entrega;
+        cursorPedido = dbController.listarPedidos();
+        cursorCliente = dbController.listarClientes();
         int i = 1;
         do{
-            endereco = (cursor.getString(cursor.getColumnIndexOrThrow("endereco"))) + ", " + (cursor.getString(cursor.getColumnIndexOrThrow("numero")));
-            entrega = buscarCoordenadasEndereco(endereco);
-            mMap.addMarker(new MarkerOptions().position(entrega).title(i + "ª Entrega")).setTag(i + "ª entrega");
-            if(i == 1){
-                entrega1 = entrega;
-            }
-            pontos.add(i-1,entrega);
+            do{
+                if(cursorPedido.getString(cursorPedido.getColumnIndexOrThrow("codigoCliente")).equals(cursorCliente.getString(cursorCliente.getColumnIndexOrThrow("codigo")))) {
+                    endereco = (cursorCliente.getString(cursorCliente.getColumnIndexOrThrow("endereco"))) + ", " + (cursorCliente.getString(cursorCliente.getColumnIndexOrThrow("bairro"))) + ", " + (cursorCliente.getString(cursorCliente.getColumnIndexOrThrow("cidade")));
+                    entrega = buscarCoordenadasEndereco(endereco);
+                    mMap.addMarker(new MarkerOptions().position(entrega).title(i + "ª Entrega")).setTag(i + "ª entrega");
+                    pontos.add(entrega);
+                }
+            }while(cursorCliente.moveToNext());
+            cursorCliente.moveToFirst();
             i++;
-        }while (cursor.moveToNext());
+        }while (cursorPedido.moveToNext());
 
         /*LatLng entrega1 = new LatLng(-7.12, -34.879);
         mMap.addMarker(new MarkerOptions().position(entrega1).title("Primeira Entrega")).setTag("Primeira Entrega");
@@ -110,7 +119,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         //foco no primeiro marcador
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(entrega1));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(pontos.get(0)));
 
         //método para capturar o touch no marcador
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -206,16 +215,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public LatLng buscarCoordenadasEndereco(String enderecoOrigem) {
-        Geocoder geoCoder = new Geocoder(this, Locale.getDefault());// esse Geocoder aqui é quem vai traduzir o endereço de String para coordenadas double
+        Geocoder geoCoder = new Geocoder(this, Locale.US);// esse Geocoder aqui é quem vai traduzir o endereço de String para coordenadas double
         List<Address> addresses = null; //este Adress aqui recebe um retorno do metodo geoCoder.getFromLocationName vc manipula este retorno pra pega as coordenadas
         LatLng latLng;
         try {
             addresses = geoCoder.getFromLocationName(enderecoOrigem, 1);// o numero um aqui é a quantidade maxima de resultados que vc quer receber
-            double fromLat = addresses.get(0).getLatitude();
-            double fromLon = addresses.get(0).getLongitude();
-            latLng = new LatLng(fromLat, fromLon);
+            if(addresses.size()>0) {
+                double fromLat = addresses.get(0).getLatitude();
+                double fromLon = addresses.get(0).getLongitude();
+                latLng = new LatLng(fromLat, fromLon);
+                return latLng;
+            }
 
-            return latLng;
+            return null;
             /*addresses = geoCoder.getFromLocationName(enderecoDestino, 1);
             double toLat = addresses.get(0).getLatitude();
             double toLon = addresses.get(0).getLongitude();*/

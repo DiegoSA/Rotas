@@ -132,6 +132,23 @@ public class DBController {
         return cursor;
     }
 
+    public Cursor listarClientes(){
+
+        String[] campos = {"codigo", "endereco", "numero", "bairro", "cidade"};
+
+        db = banco.getReadableDatabase();
+
+        Cursor cursor = db.query("CLIENTE", campos, null, null, null, null, null, null);
+
+        if(cursor != null){
+            cursor.moveToFirst();
+        }
+
+        db.close();
+
+        return cursor;
+    }
+
     public void removeUser(int id){
         String where = "_id = " + id + ";";
 

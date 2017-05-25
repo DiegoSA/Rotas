@@ -1,5 +1,7 @@
 package com.example.diego.rotas.banco;
 
+import android.support.annotation.NonNull;
+
 /**
  * Created by DBlac on 19/04/2017.
  */
@@ -88,8 +90,8 @@ public class ScriptSQL {
         sqlBuilder.append("bairro VARCHAR(40) NOT NULL, ");
         sqlBuilder.append("cidade VARCHAR(50) NOT NULL, ");
         sqlBuilder.append("cep VARCHAR(10) NOT NULL, ");
-        sqlBuilder.append("codigoVendedor INTEGER NOT NULL, ");
-        sqlBuilder.append("FOREIGN KEY (codigoVendedor) REFERENCES VENDEDOR(codigo) ");
+        sqlBuilder.append("codigoVendedor INTEGER NOT NULL ");
+        //sqlBuilder.append("FOREIGN KEY (codigoVendedor) REFERENCES VENDEDOR(codigo) ");
         sqlBuilder.append("); ");
 
         return sqlBuilder.toString();
@@ -113,6 +115,7 @@ public class ScriptSQL {
         return sqlBuilder.toString();
     }
 
+    @NonNull
     public static String createPedido(){
         StringBuilder sqlBuilder = new StringBuilder();
 
@@ -123,10 +126,10 @@ public class ScriptSQL {
         sqlBuilder.append("dataFaturamento DATETIME NOT NULL, ");
         sqlBuilder.append("dataEntrega DATETIME, ");
         sqlBuilder.append("numeroCarregamento INTEGER NOT NULL, ");
-        sqlBuilder.append("codigoVendedor INTEGER NOT NULL, ");
-        sqlBuilder.append("FOREIGN KEY (codigoVendedor) REFERENCES VENDEDOR(codigo), ");
+        sqlBuilder.append("codigoVendedor INTEGER NOT NULL ");
+        /*sqlBuilder.append("FOREIGN KEY (codigoVendedor) REFERENCES VENDEDOR(codigo), ");
         sqlBuilder.append("FOREIGN KEY (codigoCliente) REFERENCES CLIENTE(codigo), ");
-        sqlBuilder.append("FOREIGN KEY (numeroCarregamento) REFERENCES CARREGAMENTO(numeroCarregamento) ");
+        sqlBuilder.append("FOREIGN KEY (numeroCarregamento) REFERENCES CARREGAMENTO(numeroCarregamento) ");*/
         sqlBuilder.append("); ");
 
         return sqlBuilder.toString();

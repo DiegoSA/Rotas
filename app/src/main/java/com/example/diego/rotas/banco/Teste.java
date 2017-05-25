@@ -13,10 +13,11 @@ public class Teste {
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("INSERT INTO PEDIDO ( ");
-        sqlBuilder.append("id, ");
+        sqlBuilder.append("_id, ");
         sqlBuilder.append("numeroNota, ");
         sqlBuilder.append("codigoCliente, ");
         sqlBuilder.append("dataFaturamento, ");
+        sqlBuilder.append("dataEntrega, ");
         sqlBuilder.append("numeroCarregamento, ");
         sqlBuilder.append("codigoVendedor) ");
         sqlBuilder.append("VALUES ( ");
@@ -24,6 +25,7 @@ public class Teste {
         sqlBuilder.append("16210799, ");
         sqlBuilder.append("3968, ");
         sqlBuilder.append("'19/05/2017', ");
+        sqlBuilder.append("'22/05/2017', ");
         sqlBuilder.append("12925, ");
         sqlBuilder.append("3 ");
         sqlBuilder.append("); ");
@@ -35,10 +37,11 @@ public class Teste {
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("INSERT INTO PEDIDO ( ");
-        sqlBuilder.append("id, ");
+        sqlBuilder.append("_id, ");
         sqlBuilder.append("numeroNota, ");
         sqlBuilder.append("codigoCliente, ");
         sqlBuilder.append("dataFaturamento, ");
+        sqlBuilder.append("dataEntrega, ");
         sqlBuilder.append("numeroCarregamento, ");
         sqlBuilder.append("codigoVendedor) ");
         sqlBuilder.append("VALUES ( ");
@@ -46,6 +49,7 @@ public class Teste {
         sqlBuilder.append("57503221, ");
         sqlBuilder.append("4103, ");
         sqlBuilder.append("'19/05/2017', ");
+        sqlBuilder.append("'22/05/2017', ");
         sqlBuilder.append("12925, ");
         sqlBuilder.append("3 ");
         sqlBuilder.append("); ");
@@ -57,10 +61,11 @@ public class Teste {
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("INSERT INTO PEDIDO ( ");
-        sqlBuilder.append("id, ");
+        sqlBuilder.append("_id, ");
         sqlBuilder.append("numeroNota, ");
         sqlBuilder.append("codigoCliente, ");
         sqlBuilder.append("dataFaturamento, ");
+        sqlBuilder.append("dataEntrega, ");
         sqlBuilder.append("numeroCarregamento, ");
         sqlBuilder.append("codigoVendedor) ");
         sqlBuilder.append("VALUES ( ");
@@ -68,6 +73,7 @@ public class Teste {
         sqlBuilder.append("52504401, ");
         sqlBuilder.append("672, ");
         sqlBuilder.append("'19/05/2017', ");
+        sqlBuilder.append("'22/05/2017', ");
         sqlBuilder.append("12925, ");
         sqlBuilder.append("3 ");
         sqlBuilder.append("); ");
@@ -79,9 +85,99 @@ public class Teste {
 
     public static String inserirCliente(){
         StringBuilder sqlBuilder = new StringBuilder();
-        sqlBuilder.append("INSERT INTO CLIENTE(codigo, razao, fantasia, cnpj, telefone, endereco, numero, bairro, cidade, cep, codigoVendedor) VALUES (672, 'VILA BRUNA COMERCIO DE ALIMENTOS LTDA', 'MINE KALZONE', '11.017.108/0001-03', '83-32456382', 'RUA MANOEL ARRUDA CAVALCANTI', '805', 'MANAIRA', 'JOAO PESSOA', 58038680', 52); ");
-        sqlBuilder.append("INSERT INTO CLIENTE(codigo, razao, fantasia, cnpj, telefone, endereco, numero, bairro, cidade, cep, codigoVendedor) VALUES (3968, 'CABRAL E FARIAS LANCHONETE LTDA', 'SUAVE SABOR JP I', '25.238.531/0001-48', '999228616', 'RUA ANA CAVALCANTI DE ALBUQUERQUE TEIXEI', '420', 'MANGABEIRA', 'JOÃO PESSOA', 58057470', 16); ");
-        sqlBuilder.append("INSERT INTO CLIENTE(codigo, razao, fantasia, cnpj, telefone, endereco, numero, bairro, cidade, cep, codigoVendedor) VALUES (4103, 'JOSE CARLOS SOARES DE SOUSA JUNIOR', 'DU BISTRO', '23.384.699/0001-36', '999990053', 'AVENIDA GENERAL EDSON RAMALHO - ATÉ 811/', '218', 'MANAÍRA', 'JOAO PESSOA', 58038100', 57); ");
+        sqlBuilder.append("INSERT INTO CLIENTE( ");
+        sqlBuilder.append("_id, ");
+        sqlBuilder.append("codigo, ");
+        sqlBuilder.append("razao, ");
+        sqlBuilder.append("fantasia, ");
+        sqlBuilder.append("cnpj, ");
+        sqlBuilder.append("telefone, ");
+        sqlBuilder.append("endereco, ");
+        sqlBuilder.append("numero, ");
+        sqlBuilder.append("bairro, ");
+        sqlBuilder.append("cidade, ");
+        sqlBuilder.append("cep, ");
+        sqlBuilder.append("codigoVendedor) ");
+        sqlBuilder.append("VALUES ( ");
+        sqlBuilder.append("1, ");
+        sqlBuilder.append("672, ");
+        sqlBuilder.append("'VILA BRUNA COMERCIO DE ALIMENTOS LTDA', ");
+        sqlBuilder.append("'MINE KALZONE', ");
+        sqlBuilder.append("'11.017.108/0001-03', ");
+        sqlBuilder.append("'83-32456382', ");
+        sqlBuilder.append("'RUA MANOEL ARRUDA CAVALCANTI', ");
+        sqlBuilder.append("'805', ");
+        sqlBuilder.append("'MANAIRA', ");
+        sqlBuilder.append("'JOAO PESSOA', ");
+        sqlBuilder.append("'58038680', ");
+        sqlBuilder.append("52 ");
+        sqlBuilder.append("); ");
+
+        return sqlBuilder.toString();
+    }
+
+    public static String inserirCliente1(){
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("INSERT INTO CLIENTE( ");
+        sqlBuilder.append("_id, ");
+        sqlBuilder.append("codigo, ");
+        sqlBuilder.append("razao, ");
+        sqlBuilder.append("fantasia, ");
+        sqlBuilder.append("cnpj, ");
+        sqlBuilder.append("telefone, ");
+        sqlBuilder.append("endereco, ");
+        sqlBuilder.append("numero, ");
+        sqlBuilder.append("bairro, ");
+        sqlBuilder.append("cidade, ");
+        sqlBuilder.append("cep, ");
+        sqlBuilder.append("codigoVendedor) ");
+        sqlBuilder.append("VALUES ( ");
+        sqlBuilder.append("2, ");
+        sqlBuilder.append("3968, ");
+        sqlBuilder.append("'CABRAL E FARIAS LANCHONETE LTDA', ");
+        sqlBuilder.append("'SUAVE SABOR JP I', ");
+        sqlBuilder.append("'25.238.531/0001-48', ");
+        sqlBuilder.append("'999228616', ");
+        sqlBuilder.append("'RUA ANA CAVALCANTI DE ALBUQUERQUE TEIXEIRA', ");
+        sqlBuilder.append("'420', ");
+        sqlBuilder.append("'MANGABEIRA', ");
+        sqlBuilder.append("'JOAO PESSOA', ");
+        sqlBuilder.append("'58057470', ");
+        sqlBuilder.append("16 ");
+        sqlBuilder.append("); ");
+
+        return sqlBuilder.toString();
+    }
+
+    public static String inserirCliente2(){
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("INSERT INTO CLIENTE( ");
+        sqlBuilder.append("_id, ");
+        sqlBuilder.append("codigo, ");
+        sqlBuilder.append("razao, ");
+        sqlBuilder.append("fantasia, ");
+        sqlBuilder.append("cnpj, ");
+        sqlBuilder.append("telefone, ");
+        sqlBuilder.append("endereco, ");
+        sqlBuilder.append("numero, ");
+        sqlBuilder.append("bairro, ");
+        sqlBuilder.append("cidade, ");
+        sqlBuilder.append("cep, ");
+        sqlBuilder.append("codigoVendedor) ");
+        sqlBuilder.append("VALUES ( ");
+        sqlBuilder.append("3, ");
+        sqlBuilder.append("4103, ");
+        sqlBuilder.append("'JOSE CARLOS SOARES DE SOUSA JUNIOR', ");
+        sqlBuilder.append("'DU BISTRO', ");
+        sqlBuilder.append("'23.384.699/0001-36', ");
+        sqlBuilder.append("'999990053', ");
+        sqlBuilder.append("'AVENIDA GENERAL EDSON RAMALHO', ");
+        sqlBuilder.append("'218', ");
+        sqlBuilder.append("'MANAIRA', ");
+        sqlBuilder.append("'JOAO PESSOA', ");
+        sqlBuilder.append("'58038100', ");
+        sqlBuilder.append("57 ");
+        sqlBuilder.append("); ");
 
         return sqlBuilder.toString();
     }
