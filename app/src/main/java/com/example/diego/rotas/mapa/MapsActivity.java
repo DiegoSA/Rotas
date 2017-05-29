@@ -1,15 +1,19 @@
 package com.example.diego.rotas.mapa;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
-import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -28,10 +32,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Locale;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -44,6 +45,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private DBController dbController;
     private Cursor cursorPedido, cursorCliente;
     private String endereco;
+    private Button end, noEnd;
+
 
 
 
@@ -71,6 +74,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
         dbController = new DBController(getBaseContext());
 
         /*location = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -97,26 +101,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if(cursorPedido.getString(cursorPedido.getColumnIndexOrThrow("codigoCliente")).equals(cursorCliente.getString(cursorCliente.getColumnIndexOrThrow("codigo")))) {
                     endereco = (cursorCliente.getString(cursorCliente.getColumnIndexOrThrow("endereco"))) + ", " + (cursorCliente.getString(cursorCliente.getColumnIndexOrThrow("bairro"))) + ", " + (cursorCliente.getString(cursorCliente.getColumnIndexOrThrow("cidade")));
                     entrega = buscarCoordenadasEndereco(endereco);
-                    mMap.addMarker(new MarkerOptions().position(entrega).title(i + "ª Entrega")).setTag(i + "ª entrega");
+                    mMap.addMarker(new MarkerOptions().position(entrega).title(i + "ª Entrega")).setTag(cursorPedido.getString(cursorPedido.getColumnIndexOrThrow("numeroNota")));
                     pontos.add(entrega);
                 }
             }while(cursorCliente.moveToNext());
             cursorCliente.moveToFirst();
             i++;
         }while (cursorPedido.moveToNext());
-
-        /*LatLng entrega1 = new LatLng(-7.12, -34.879);
-        mMap.addMarker(new MarkerOptions().position(entrega1).title("Primeira Entrega")).setTag("Primeira Entrega");
-        LatLng entrega2 = new LatLng(-7.15, -34.8);
-        mMap.addMarker(new MarkerOptions().position(entrega2).title("Segunda Entrega"));
-        LatLng entrega3 = new LatLng(-7.13, -34.85);
-        mMap.addMarker(new MarkerOptions().position(entrega3).title("Terceira Entrega"));
-
-        makeURL(entrega1.latitude, entrega1.longitude, entrega2.latitude, entrega2.longitude);*/
-
-
-
-
 
         //foco no primeiro marcador
         mMap.moveCamera(CameraUpdateFactory.newLatLng(pontos.get(0)));
@@ -128,7 +119,71 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 String seq = (String) marker.getTag();
                 AlertDialog.Builder ad = new AlertDialog.Builder(MapsActivity.this);
-                ad.setTitle("Confirmação de Entrega");
+                LayoutInflater inflater = getLayoutInflater();
+                View alert = inflater.inflate(R.layout.confirmacao_entrega, null);
+                end = (Button) findViewById(R.id.buttonFinalizar);
+                noEnd = (Button) findViewById(R.id.buttonDevolvida);
+                final TextView numNota = (TextView) alert.findViewById(R.id.numeroNota);
+                final TextView razao = (TextView) alert.findViewById(R.id.razaoSocial);
+                final TextView fantasia = (TextView) alert.findViewById(R.id.fantasia);
+                final TextView valor = (TextView) alert.findViewById(R.id.valor);
+                final TextView vendedor = (TextView) alert.findViewById(R.id.vendedor);
+                final TextView telefone = (TextView) alert.findViewById(R.id.telefone
+                );
+                cursorPedido.moveToFirst();
+                do{
+                    if(cursorPedido.getString(cursorPedido.getColumnIndexOrThrow("numeroNota")).equals(marker.getTag().toString())) {
+                        do{
+                            if(cursorPedido.getString(cursorPedido.getColumnIndexOrThrow("codigoCliente")).equals(cursorCliente.getString(cursorCliente.getColumnIndexOrThrow("codigo")))) {
+                                numNota.setText(cursorPedido.getString(cursorPedido.getColumnIndexOrThrow("numeroNota")));
+                                razao.setText(cursorCliente.getString(cursorCliente.getColumnIndexOrThrow("razao")));
+                                fantasia.setText(cursorCliente.getString(cursorCliente.getColumnIndexOrThrow("fantasia")));
+                                valor.setText("R$ 500,00");
+                                vendedor.setText(cursorCliente.getString(cursorCliente.getColumnIndexOrThrow("codigoVendedor")));
+                                telefone.setText("83 3235-4869");
+                            }
+                        }while(cursorCliente.moveToNext());
+                        cursorCliente.moveToFirst();
+                    }
+                }while (cursorPedido.moveToNext());
+
+                end.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(MapsActivity.this, "Entrega realizada", Toast.LENGTH_SHORT).show();
+                        opcao = 1;
+                        alterPosition(marker, opcao);
+                    }
+                });
+
+                noEnd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(MapsActivity.this, "Entrega não realizada", Toast.LENGTH_SHORT).show();
+                        AlertDialog.Builder adNao = new AlertDialog.Builder(MapsActivity.this);
+                        adNao.setTitle("Motivo da Não Entrega");
+                        adNao.setMessage("Devolução ou Reentrega?");
+                        adNao.setPositiveButton("Devolução", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                opcao = 2;
+                                alterPosition(marker, opcao);
+                            }
+                        });
+                        adNao.setNegativeButton("Reentrega", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                opcao = 3;
+                                alterPosition(marker, opcao);
+                            }
+                        });
+                        adNao.show();
+                    }
+                });
+
+                ad.setView(alert);
+
+                /*ad.setTitle("Confirmação de Entrega");
                 ad.setMessage("A "+ seq +"  foi Finalizada?");
                 ad.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
                     @Override
@@ -163,7 +218,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         });
                         adNao.show();
                     }
-                });
+                });*/
 
                 ad.show();
 
@@ -174,11 +229,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //zoom no marcador focado
         mMap.moveCamera(CameraUpdateFactory.zoomTo(14));
 
+        //traçar a rota entre todos os marcadores do mapa
         for(int j=0; j<(pontos.size() - 1); j++) {
             traçarRota(this, mMap, pontos.get(j), pontos.get(j+1));
         }
     }
 
+    //altera a posição do marcador passado por referência
     public void alterPosition(Marker marker, int opcao){
         switch (opcao){
             case 1:
@@ -195,31 +252,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    //traça a rota de um ponto a outro
     public void traçarRota(Context context, GoogleMap mMap, LatLng start, LatLng destiny){
         new RotaAsyncTask(context, mMap).execute(start.latitude, start.longitude, destiny.latitude, destiny.longitude);
     }
 
-    public String makeURL(double sourcelat, double sourcelog, double destlat, double destlog) {
-        StringBuilder urlString = new StringBuilder();
-        urlString.append("http://maps.googleapis.com/maps/api/directions/json");
-        urlString.append("?origin=");// from
-        urlString.append(Double.toString(sourcelat));
-        urlString.append(",");
-        urlString.append(Double.toString(sourcelog));
-        urlString.append("&destination=");// to
-        urlString.append(Double.toString(destlat));
-        urlString.append(",");
-        urlString.append(Double.toString(destlog));
-        urlString.append("&sensor=false&mode=driving&alternatives=true");
-        return urlString.toString();
-    }
-
+    //transformar o endereço extenso em coordenadas
     public LatLng buscarCoordenadasEndereco(String enderecoOrigem) {
-        Geocoder geoCoder = new Geocoder(this, Locale.US);// esse Geocoder aqui é quem vai traduzir o endereço de String para coordenadas double
-        List<Address> addresses = null; //este Adress aqui recebe um retorno do metodo geoCoder.getFromLocationName vc manipula este retorno pra pega as coordenadas
+        Geocoder geoCoder = new Geocoder(this, Locale.US);
+        List<Address> addresses = null;
         LatLng latLng;
         try {
-            addresses = geoCoder.getFromLocationName(enderecoOrigem, 1);// o numero um aqui é a quantidade maxima de resultados que vc quer receber
+            addresses = geoCoder.getFromLocationName(enderecoOrigem, 1);
             if(addresses.size()>0) {
                 double fromLat = addresses.get(0).getLatitude();
                 double fromLon = addresses.get(0).getLongitude();
@@ -228,9 +272,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
             return null;
-            /*addresses = geoCoder.getFromLocationName(enderecoDestino, 1);
-            double toLat = addresses.get(0).getLatitude();
-            double toLon = addresses.get(0).getLongitude();*/
         } catch (IOException e) {
             e.printStackTrace();
         }

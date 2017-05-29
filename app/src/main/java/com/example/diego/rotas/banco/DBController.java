@@ -134,7 +134,7 @@ public class DBController {
 
     public Cursor listarClientes(){
 
-        String[] campos = {"codigo", "endereco", "numero", "bairro", "cidade"};
+        String[] campos = {"codigo", "razao", "fantasia", "endereco", "numero", "bairro", "cidade", "codigoVendedor"};
 
         db = banco.getReadableDatabase();
 

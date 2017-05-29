@@ -90,8 +90,8 @@ public class ScriptSQL {
         sqlBuilder.append("bairro VARCHAR(40) NOT NULL, ");
         sqlBuilder.append("cidade VARCHAR(50) NOT NULL, ");
         sqlBuilder.append("cep VARCHAR(10) NOT NULL, ");
-        sqlBuilder.append("codigoVendedor INTEGER NOT NULL ");
-        //sqlBuilder.append("FOREIGN KEY (codigoVendedor) REFERENCES VENDEDOR(codigo) ");
+        sqlBuilder.append("codigoVendedor INTEGER NOT NULL, ");
+        sqlBuilder.append("FOREIGN KEY (codigoVendedor) REFERENCES VENDEDOR(codigo) ");
         sqlBuilder.append("); ");
 
         return sqlBuilder.toString();
@@ -125,11 +125,12 @@ public class ScriptSQL {
         sqlBuilder.append("codigoCliente INTEGER NOT NULL, ");
         sqlBuilder.append("dataFaturamento DATETIME NOT NULL, ");
         sqlBuilder.append("dataEntrega DATETIME, ");
+        sqlBuilder.append("valor NUMERIC (10, 2) NOT NULL, ");
         sqlBuilder.append("numeroCarregamento INTEGER NOT NULL, ");
-        sqlBuilder.append("codigoVendedor INTEGER NOT NULL ");
-        /*sqlBuilder.append("FOREIGN KEY (codigoVendedor) REFERENCES VENDEDOR(codigo), ");
+        sqlBuilder.append("codigoVendedor INTEGER NOT NULL, ");
+        sqlBuilder.append("FOREIGN KEY (codigoVendedor) REFERENCES VENDEDOR(codigo), ");
         sqlBuilder.append("FOREIGN KEY (codigoCliente) REFERENCES CLIENTE(codigo), ");
-        sqlBuilder.append("FOREIGN KEY (numeroCarregamento) REFERENCES CARREGAMENTO(numeroCarregamento) ");*/
+        sqlBuilder.append("FOREIGN KEY (numeroCarregamento) REFERENCES CARREGAMENTO(numeroCarregamento) ");
         sqlBuilder.append("); ");
 
         return sqlBuilder.toString();
