@@ -23,9 +23,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.execSQL(ScriptSQL.createUsuarios());
         db.execSQL(ScriptSQL.createDefaultUser());
-        db.execSQL(ScriptSQL.createVeiculo());
-        db.execSQL(Teste.inserirVeiculo());
-        /*db.execSQL(ScriptSQL.createPedido());
+        //db.execSQL(ScriptSQL.createVeiculo());
+        //db.execSQL(Teste.inserirVeiculo());
+        db.execSQL(ScriptSQL.createPedido());
         db.execSQL(ScriptSQL.createCliente());
         db.execSQL(Teste.inserirCliente());
         db.execSQL(Teste.inserirCliente1());
@@ -34,7 +34,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(Teste.inserirPedido1());
         db.execSQL(Teste.inserirPedido2());
         //inserir dados para um teste;
-        db.execSQL(Teste.inserirVendedor());
+        /*db.execSQL(Teste.inserirVendedor());
         db.execSQL(Teste.inserirVeiculo());
         db.execSQL(Teste.inserirMotorista());
         db.execSQL(Teste.inserirCliente());

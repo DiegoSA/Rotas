@@ -125,7 +125,7 @@ public class ScriptSQL {
         sqlBuilder.append("codigoCliente INTEGER NOT NULL, ");
         sqlBuilder.append("dataFaturamento DATETIME NOT NULL, ");
         sqlBuilder.append("dataEntrega DATETIME, ");
-        sqlBuilder.append("valor NUMERIC (10, 2) NOT NULL, ");
+        //sqlBuilder.append("valor NUMERIC (10, 2) NOT NULL, ");
         sqlBuilder.append("numeroCarregamento INTEGER NOT NULL, ");
         sqlBuilder.append("codigoVendedor INTEGER NOT NULL, ");
         sqlBuilder.append("FOREIGN KEY (codigoVendedor) REFERENCES VENDEDOR(codigo), ");

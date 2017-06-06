@@ -45,7 +45,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private DBController dbController;
     private Cursor cursorPedido, cursorCliente;
     private String endereco;
-    private Button end, noEnd;
+
 
 
 
@@ -74,7 +74,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
         dbController = new DBController(getBaseContext());
 
         /*location = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -120,9 +119,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String seq = (String) marker.getTag();
                 AlertDialog.Builder ad = new AlertDialog.Builder(MapsActivity.this);
                 LayoutInflater inflater = getLayoutInflater();
-                View alert = inflater.inflate(R.layout.confirmacao_entrega, null);
-                end = (Button) findViewById(R.id.buttonFinalizar);
-                noEnd = (Button) findViewById(R.id.buttonDevolvida);
+                final View alert = inflater.inflate(R.layout.confirmacao_entrega, null);
+                final Button end = (Button) alert.findViewById(R.id.buttonFinalizar);
+                final Button noEnd = (Button) alert.findViewById(R.id.buttonDevolvida);
                 final TextView numNota = (TextView) alert.findViewById(R.id.numeroNota);
                 final TextView razao = (TextView) alert.findViewById(R.id.razaoSocial);
                 final TextView fantasia = (TextView) alert.findViewById(R.id.fantasia);
@@ -147,12 +146,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 }while (cursorPedido.moveToNext());
 
-                end.setOnClickListener(new View.OnClickListener() {
+                /*end.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(MapsActivity.this, "Entrega realizada", Toast.LENGTH_SHORT).show();
-                        opcao = 1;
-                        alterPosition(marker, opcao);
+                        AlertDialog.Builder adNao = new AlertDialog.Builder(MapsActivity.this);
+                        adNao.setTitle("Confirmação de Entrega");
+                        adNao.setMessage("Confirma a entrega?");
+                        adNao.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(MapsActivity.this, "Entrega realizada", Toast.LENGTH_SHORT).show();
+                                opcao = 1;
+                                alterPosition(marker, opcao);
+                                dialog.dismiss();
+                            }
+                        });
+                        adNao.setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                alterPosition(marker, opcao);
+                                dialog.dismiss();
+                            }
+                        });
+                        adNao.show();
                     }
                 });
 
@@ -179,7 +195,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         });
                         adNao.show();
                     }
-                });
+                });*/
 
                 ad.setView(alert);
 
