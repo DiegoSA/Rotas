@@ -129,7 +129,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 final TextView vendedor = (TextView) alert.findViewById(R.id.vendedor);
                 final TextView telefone = (TextView) alert.findViewById(R.id.telefone
                 );
-                cursorPedido.moveToFirst();
+                /*cursorPedido.moveToFirst();
                 do{
                     if(cursorPedido.getString(cursorPedido.getColumnIndexOrThrow("numeroNota")).equals(marker.getTag().toString())) {
                         do{
@@ -144,9 +144,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }while(cursorCliente.moveToNext());
                         cursorCliente.moveToFirst();
                     }
-                }while (cursorPedido.moveToNext());
+                }while (cursorPedido.moveToNext());*/
 
-                /*end.setOnClickListener(new View.OnClickListener() {
+                end.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         AlertDialog.Builder adNao = new AlertDialog.Builder(MapsActivity.this);
@@ -195,11 +195,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         });
                         adNao.show();
                     }
-                });*/
+                });
 
-                ad.setView(alert);
+                //ad.setView(alert);
 
-                /*ad.setTitle("Confirmação de Entrega");
+                ad.setTitle("Confirmação de Entrega");
                 ad.setMessage("A "+ seq +"  foi Finalizada?");
                 ad.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
                     @Override
@@ -234,8 +234,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         });
                         adNao.show();
                     }
-                });*/
+                });
 
+                
                 ad.show();
 
                 return false;
